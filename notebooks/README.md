@@ -3,7 +3,16 @@
 Central question: **What separates winning NFL teams, and how consistently do
 those strengths hold up across seasons?**
 
-These are planned notebooks, not completed analyses. Start with game results,
+These are starter notebooks with empty code cells, not completed analyses.
+Open a notebook below and select **Python (NFL Analytics)** to begin.
+
+- [01 - Data loading and quality](01_data_loading_and_quality.ipynb)
+- [02 - Building the analysis dataset](02_building_the_analysis_dataset.ipynb)
+- [03 - What separates winning teams?](03_what_separates_winning_teams.ipynb)
+- [04 - Team form and consistency](04_team_form_and_consistency.ipynb)
+- [05 - Findings and recommendations](05_findings_and_recommendations.ipynb)
+
+Start with game results,
 team-game performance, and team information. Add weather or rest-day context only
 after validating the core dataset. Select the season window after checking actual
 coverage; a scheduled game is not a completed result.
@@ -107,6 +116,6 @@ do not know pandas or football analytics.
 7. Before publishing, restart the kernel and run all cells in order. Inspect
    outputs for credentials or private data and retain only shareable results.
 
-Build these in sequence. A finished first notebook is more useful than five empty
-notebook shells. Add reusable Python helpers only when actual repeated code
+Complete these in sequence, starting with notebook 01.
+Add reusable Python helpers only when actual repeated code
 justifies them; no application framework or package scaffold is required.

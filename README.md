@@ -6,7 +6,10 @@ datasets to explore team performance, game outcomes, and season trends.
 ## Project status
 
 The local Python environment and notebook dependencies are configured with uv.
-Analysis notebooks and findings are planned; see the [notebook roadmap](notebooks/README.md).
+Five starter notebooks contain questions, brief prompts, and empty code cells.
+Analysis and findings are not yet implemented; see the [notebook roadmap](notebooks/README.md).
+
+Start with [01 - Data loading and quality](notebooks/01_data_loading_and_quality.ipynb).
 
 ## Run locally
 
