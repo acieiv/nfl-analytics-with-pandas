@@ -1,121 +1,192 @@
 # Notebook roadmap
 
-Central question: **What separates winning NFL teams, and how consistently do
-those strengths hold up across seasons?**
+This repository is a portfolio-oriented pandas curriculum using NFL data as the
+subject matter. The football questions keep the work interesting; the technical
+goal is to demonstrate practical Python and pandas understanding from foundational
+data inspection through advanced transformations and a capstone analysis.
 
-These are starter notebooks with empty code cells, not completed analyses.
-Open a notebook below and select **Python (NFL Analytics)** to begin.
+These are starter notebooks with prompts and empty code cells, not completed
+solutions. Complete them in sequence when practical.
 
-- [01 - Data loading and quality](01_data_loading_and_quality.ipynb)
-- [02 - Building the analysis dataset](02_building_the_analysis_dataset.ipynb)
-- [03 - What separates winning teams?](03_what_separates_winning_teams.ipynb)
-- [04 - Team form and consistency](04_team_form_and_consistency.ipynb)
-- [05 - Findings and recommendations](05_findings_and_recommendations.ipynb)
+## Foundation
 
-Start with game results,
-team-game performance, and team information. Add weather or rest-day context only
-after validating the core dataset. Select the season window after checking actual
-coverage; a scheduled game is not a completed result.
-
-## 01_data_loading_and_quality.ipynb
+### 01_data_loading_and_quality.ipynb
 
 **Question:** What data do we have, and which records are suitable for analysis?
 
-- Record source object keys, export dates, season coverage, and table grain.
-- Read CSV or Parquet with explicit identifier, numeric, and datetime handling.
-- Profile missing values, duplicate keys, distributions, and memory use.
-- Distinguish scheduled games from completed games and regular season from playoffs.
-- Report data-quality findings and explain the inclusion rules.
+**pandas focus:** `read_csv`, `read_parquet`, dtypes, `info`, missing values,
+duplicates, `value_counts`, filtering, datetime parsing, assertions.
 
-**Demonstrates:** file IO, dtypes, `info`, `isna`, `duplicated`, `value_counts`,
-date parsing, Boolean filtering, and assertions.
+**Deliverable:** a compact data-quality report and documented inclusion rules.
 
-**Deliverable:** a compact quality report and documented data-selection rules.
-If downloads are included, keep them optional when the required local files are
-already available, and never display credentials or signed download URLs.
-
-## 02_building_the_analysis_dataset.ipynb
+### 02_building_the_analysis_dataset.ipynb
 
 **Question:** How can game results and team performance be combined correctly?
 
-- Build a table with one row per team per game.
-- Derive points for, points against, point differential, and outcome from the
-  team's home/away role. Handle ties explicitly.
-- Join game and team dimensions with declared cardinality, using
-  `merge(validate=..., indicator=True)` and coverage checks.
-- Reconcile team identifiers, handle missing values deliberately, and assert
-  uniqueness of `(game_id, team)`.
-- Check expected row counts and report unmatched records before exporting.
+**pandas focus:** `merge`, `concat`, `melt`, mapping, nullable types,
+vectorized calculations, declared join cardinality, coverage checks.
 
-**Demonstrates:** `merge`, `concat` or `melt`, vectorized calculations, mapping,
-nullable types, and data-integrity checks.
+**Deliverable:** a validated team-game analytical dataset.
 
-**Deliverable:** `data/processed/team_games.parquet` with documented columns.
+### 03_what_separates_winning_teams.ipynb
 
-## 03_what_separates_winning_teams.ipynb
+**Question:** How do selected performance measures differ across wins, losses,
+and ties?
 
-**Question:** How do efficiency, turnovers, and scoring differ across outcomes?
+**pandas focus:** `groupby().agg`, `transform`, `pivot_table`, ranking,
+binning, distribution summaries.
 
-- Compare EPA per play, turnover differential, third-down efficiency, and
-  red-zone efficiency for wins, losses, and ties.
-- Aggregate by team and season and compare more than one season.
-- Show sample sizes and distributions alongside averages.
-- Explain meaningful charts and distinguish association from causation.
-- Label same-game metrics as retrospective explanations, not pregame predictors.
+**Deliverable:** evidence-backed descriptive findings and charts.
 
-**Demonstrates:** `groupby().agg`, `transform`, `pivot_table`, ranking, binning,
-and readable charts with labeled units and populations.
-
-**Deliverable:** a small set of evidence-backed findings and visualizations.
-
-## 04_team_form_and_consistency.ipynb
+### 04_team_form_and_consistency.ipynb
 
 **Question:** Does recent team performance persist into subsequent games?
 
-- Sort games chronologically within teams and seasons.
-- Calculate prior-game rolling averages and variability, with explicit window
-  sizes and minimum observations.
-- Use `shift(1)` before rolling calculations so a game's own outcome cannot enter
-  its pregame features. Keep team and season boundaries intact.
-- Compare recent form with subsequent outcomes and a simple baseline across
-  chronological season windows.
-- Discuss small samples, season resets, and changes in opponent strength.
+**pandas focus:** chronological sorting, grouped `shift`, `rolling`, window
+statistics, leakage-aware comparisons.
 
-**Demonstrates:** grouped `shift`, `rolling`, sorting, temporal comparisons,
-and leakage-aware analysis without requiring a machine-learning model.
+**Deliverable:** team trend analysis based only on information available before
+the game being evaluated.
 
-**Deliverable:** team trend charts and an honest assessment of persistence.
+### 05_findings_and_recommendations.ipynb
 
-## 05_findings_and_recommendations.ipynb
+**Question:** What should a reader take away from the first analysis sequence?
 
-**Question:** What should a reader take away from this analysis?
+**pandas focus:** reproducible loading, recomputed summaries, concise tables,
+final analytical synthesis.
 
-- Summarize three to five supported findings, each with a chart or table.
-- State the dataset scope, exclusions, limitations, and unresolved questions.
-- Explain what the results suggest for evaluating team performance.
-- Separate measured findings from hypotheses and proposed future work.
-- Load saved analytical inputs and recompute summary tables; do not depend on
-  variables left in memory by another notebook.
+**Deliverable:** a portfolio-ready summary of supported findings, limitations,
+and follow-up questions.
 
-**Demonstrates:** synthesis, reproducibility, and communication to readers who
-do not know pandas or football analytics.
+## Intermediate pandas
 
-**Deliverable:** a concise report linked prominently from the root README.
+### 06_reshaping_nfl_data.ipynb
+
+**Question:** How can the same NFL data be represented in long and wide forms for
+different analytical tasks?
+
+**pandas focus:** `melt`, `pivot`, `pivot_table`, `stack`, `unstack`,
+index naming, shape validation.
+
+**Deliverable:** equivalent long- and wide-form datasets plus an explanation of
+when each layout is useful.
+
+### 07_advanced_filtering_and_indexing.ipynb
+
+**Question:** How can precise slices of games, teams, seasons, and situations be
+selected cleanly?
+
+**pandas focus:** `.loc`, `.iloc`, Boolean masks, `.query()`, `.isin()`,
+`.between()`, index operations, optional MultiIndex work.
+
+**Deliverable:** a set of readable, validated analytical slices without chained
+indexing.
+
+### 08_groupby_deep_dive.ipynb
+
+**Question:** How can team and season behavior be summarized at multiple levels
+without losing row-level context?
+
+**pandas focus:** multi-column `groupby`, named aggregation, `transform`,
+`filter`, `size`, `nunique`, grouped ranking.
+
+**Deliverable:** team/season summary tables and row-level columns derived from
+group context.
+
+### 09_time_series_analysis.ipynb
+
+**Question:** How does team performance change over the course of a season?
+
+**pandas focus:** datetime conversion, `DatetimeIndex`, `resample`, `rolling`,
+`expanding`, `ewm`, chronological boundaries.
+
+**Deliverable:** time-aware team trends with clearly defined windows.
+
+### 10_joining_nfl_datasets.ipynb
+
+**Question:** How can multiple NFL datasets be joined without silently creating
+duplicate or unmatched records?
+
+**pandas focus:** `merge`, `join`, `concat`, `validate=`, `indicator=True`,
+anti-join patterns, key reconciliation, coverage checks.
+
+**Deliverable:** a documented multi-table join with explicit cardinality and
+unmatched-record reporting.
+
+### 11_cleaning_messy_nfl_data.ipynb
+
+**Question:** How can inconsistent identifiers, text fields, missing values, and
+types be standardized safely?
+
+**pandas focus:** `.str` methods, `replace`, `fillna`, `astype`, nullable
+types, categoricals, duplicate handling, explicit cleaning maps.
+
+**Deliverable:** a before/after cleaning report and reusable cleaning rules.
+
+## Advanced pandas
+
+### 12_feature_engineering_with_pandas.ipynb
+
+**Question:** How can useful analytical variables be created efficiently from
+existing game and team columns?
+
+**pandas focus:** `assign`, `np.select`, `where`, `mask`, `cut`, `qcut`,
+vectorized arithmetic, grouped features.
+
+**Deliverable:** a documented feature table with validation for every derived
+column.
+
+### 13_performance_and_memory.ipynb
+
+**Question:** How can a larger NFL dataset be processed more efficiently without
+changing the analytical result?
+
+**pandas focus:** `memory_usage`, efficient numeric dtypes, categoricals,
+vectorization, avoiding unnecessary copies, comparing vectorized logic with
+row-wise `apply`.
+
+**Deliverable:** measured before/after memory or runtime comparisons and a short
+explanation of the tradeoffs.
+
+### 14_advanced_window_operations.ipynb
+
+**Question:** How can prior performance, streaks, ranks, and evolving baselines be
+computed within team and season boundaries?
+
+**pandas focus:** grouped `rolling`, `expanding`, `ewm`, `shift`, `rank`,
+`cumcount`, cumulative operations.
+
+**Deliverable:** leakage-aware window features and trend visualizations.
+
+### 15_pandas_capstone.ipynb
+
+**Question:** Can one NFL question be answered end to end using the pandas skills
+demonstrated throughout the repository?
+
+**pandas focus:** select the appropriate combination of loading, cleaning,
+reshaping, joining, grouping, temporal operations, feature engineering,
+validation, and visualization.
+
+**Deliverable:** a standalone portfolio analysis that starts from raw inputs,
+documents every important transformation, and ends with supported findings and
+limitations.
 
 ## Conventions for every notebook
 
-1. Open with the question, inputs, row grain, and expected output.
-2. Keep imports and path setup near the top. Resolve paths relative to the
-   repository, not an absolute path on one developer's computer.
+1. Open with the analytical question, pandas skills being practiced, input grain,
+   and expected output.
+2. Keep imports and path setup near the top and use repository-relative paths.
 3. Alternate short explanations with focused code cells and interpreted outputs.
-4. Use assertions at important joins and transformations. Explain cleaning
-   decisions rather than silently dropping inconvenient rows.
-5. Load required files explicitly. Explain which earlier notebook produces a
-   missing input; do not rely on hidden kernel state or `%run` chains.
-6. End with findings, limitations, and the next question.
-7. Before publishing, restart the kernel and run all cells in order. Inspect
-   outputs for credentials or private data and retain only shareable results.
+4. Use assertions at important joins and transformations.
+5. Explain cleaning decisions instead of silently dropping inconvenient rows.
+6. Load required files explicitly; do not rely on hidden kernel state.
+7. Distinguish retrospective/descriptive variables from information that would
+   have been available beforehand.
+8. Prefer clear vectorized pandas operations before reaching for row-wise
+   `apply`.
+9. End with findings, limitations, and a brief pandas-skills recap.
+10. Before publishing, restart the kernel and run all cells in order.
 
-Complete these in sequence, starting with notebook 01.
-Add reusable Python helpers only when actual repeated code
-justifies them; no application framework or package scaffold is required.
+Add reusable helpers only when repeated code genuinely justifies them. The point
+of the repository is visible pandas practice, not building an application
+framework.
